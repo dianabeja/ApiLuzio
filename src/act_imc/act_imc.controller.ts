@@ -19,9 +19,14 @@ export class ActImcController {
     return this.actImcService.findAll();
   }
 
-  @Get('/act/:actividades')
+  @Get('/actividades/:actividades')
   Actividades(@Param('actividades') actividades: string){
     return this.actImcService.Actividades(actividades);
+  }
+
+  @Get('/actividad/:actividad')
+  Actividad(@Param('actividad') actividades: string){
+    return this.actImcService.Actividad(actividades);
   }
 
   @Get(':id')

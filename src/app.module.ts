@@ -3,7 +3,6 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { CuentaModule } from './cuenta/cuenta.module';
 import { Usuario } from './usuarios/entities/usuario.entity';
-import { UsuarioFactory } from './Fabrica/Entidades/usuarios.factory';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UsuariosModule } from './usuarios/usuarios.module';
 import { ActImcModule } from './act_imc/act_imc.module';
@@ -17,6 +16,9 @@ import { UsuarioActImcModule } from './usuario-act-imc/usuario-act-imc.module';
 import { UsuarioActImc } from './usuario-act-imc/entities/usuario-act-imc.entity';
 import { UsuarioActEstresModule } from './usuario-act-estres/usuario-act-estres.module';
 import { UsuarioActEstres } from './usuario-act-estres/entities/usuario-act-estres.entity';
+
+
+
 
 @Module({
   imports: [

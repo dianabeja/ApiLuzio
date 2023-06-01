@@ -30,6 +30,11 @@ export class UsuariosService {
     const user = new Usuario();
     user.correo_usuario=createUsuarioDto.correo_usuario;
     user.contraseña_usuario=createUsuarioDto.contraseña_usuario;
+    user.apellidos_usuario=createUsuarioDto.apellidos_usuario;
+    user.IMC_usuario=createUsuarioDto.IMC_usuario;
+    user.nombre_usuario=createUsuarioDto.nombre_usuario;
+    user.sexo_usuario=createUsuarioDto.sexo_usuario;
+    user.edad_usuario=createUsuarioDto.edad_usuario;
     return await this.usuarioRepository.save(user);
   }
 
@@ -45,6 +50,7 @@ export class UsuariosService {
     let buscar= await this.usuarioRepository.findOne({where: {correo_usuario:correo}})
     return this.usuarioRepository.update(buscar.id_usuario, valor);
   }
+  
   async updateEstres(correo: string, valor:UpDateEstresDto){
     let buscar= await this.usuarioRepository.findOne({where: {correo_usuario:correo}})
     return this.usuarioRepository.update(buscar.id_usuario, valor);

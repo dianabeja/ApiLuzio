@@ -52,31 +52,67 @@ export class ActImcService {
     
     let act =  await this.actImcRepository.find({where:{tipo_actIMC: tipo, nivel_IMC: nivel}})
 
-    let numero:number = ((Math.random() * act.length));
+    while (!Actividad1 || !Actividad2 || !Actividad3) {
+      let numero: number = Math.floor(Math.random() * act.length);
+      let actividad = act[numero.toFixed()];
+  
+      if (!Actividad1) {
+        Actividad1 = actividad;
+      } else if (!Actividad2 && actividad !== Actividad1) {
+        Actividad2 = actividad;
+      } else if (!Actividad3 && actividad !== Actividad1 && actividad !== Actividad2) {
+        Actividad3 = actividad;
+      }
+    }
+  
+    let arreglo: any = [Actividad1, Actividad2, Actividad3];
+    return arreglo;
+
+   /* let numero:number = ((Math.random() * act.length));
 
     while (contador<=3){
 
-      if (contador=1) {
+      if (contador===1) {
         Actividad1 = act[numero.toFixed()]
         numero = ((Math.random() * act.length));
         contador+=1;
       }
 
-      if (contador=2) {
-        Actividad2 = act[numero.toFixed()]
+      if (contador===2) {
+        if(act[numero.toFixed()]!=Actividad1){
+          Actividad2 = act[numero.toFixed()]
+          contador+=1;
+        }
         numero = ((Math.random() * act.length));
-        contador+=1;
       }
 
-      if (contador=3) {
+      if (contador===3) {
+        if(act[numero.toFixed()]!=Actividad2 && act[numero.toFixed()]!=Actividad1){
         Actividad3 = act[numero.toFixed()]
-        numero = ((Math.random() * act.length));
         contador+=1;
       }
-        
+      numero = ((Math.random() * act.length));
     }
-    return {Actividad1, Actividad2, Actividad3}
-  }
+    let arreglo:any=[Actividad1, Actividad2, Actividad3]; 
+   
+    return arreglo;
+  }*/
+}
+
+async Actividad(actividades: string){
+  const array= actividades.split(',');
+  const tipo= array[0]
+  const nivel=array[1]
+  let Actividad:any;
+  
+  let act =  await this.actImcRepository.find({where:{tipo_actIMC: tipo, nivel_IMC: nivel}})
+
+  let numero:number = ((Math.random() * act.length));
+
+      Actividad = act[numero.toFixed()]
+
+  return Actividad;
+}
 
   remove(id: number) {
     return `This action removes a #${id} actImc`;

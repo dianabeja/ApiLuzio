@@ -12,7 +12,7 @@ export class CreateUsuarioDto {
   @Length(28, 28, { message: ValidationMessages.IMPUT_LONGITUD })
   correo_usuario: string;
 
-  /*@IsString()
+  @IsString()
   @Length(1, 30, { message: ValidationMessages.IMPUT_NOMBRE })
   readonly nombre_usuario: string;
 
@@ -35,11 +35,7 @@ export class CreateUsuarioDto {
   @IsString()
   @Length(1, 20, { message: ValidationMessages.IMPUT_LONGITUD })
   IMC_usuario: string;
-
-  @IsString()
-  @Length(1, 30, { message: ValidationMessages.IMPUT_LONGITUD })
-  nivelEstres_usuario: string;*/
-
+  
   @IsString()
   @Length(8, 8, { message: ValidationMessages.IMPUT_LONGITUD })
   contraseña_usuario: string;
