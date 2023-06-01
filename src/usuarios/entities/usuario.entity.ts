@@ -28,4 +28,10 @@ export class Usuario {
 
   @Column()
   contraseña_usuario: string;
+
+  @Column()
+  estatura: string;
+
+  @Column()
+  peso: string;
 }

@@ -39,4 +39,10 @@ export class CreateUsuarioDto {
   @IsString()
   @Length(8, 8, { message: ValidationMessages.IMPUT_LONGITUD })
   contraseña_usuario: string;
+
+  @IsString()
+  estatura: string;
+
+  @IsString()
+  peso: string;
 }

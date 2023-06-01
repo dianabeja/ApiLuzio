@@ -28,13 +28,15 @@ export class UsuariosService {
       throw new NotFoundException('Elemento duplicado');
     }
     const user = new Usuario();
-    user.correo_usuario=createUsuarioDto.correo_usuario;
-    user.contraseña_usuario=createUsuarioDto.contraseña_usuario;
     user.apellidos_usuario=createUsuarioDto.apellidos_usuario;
+    user.contraseña_usuario=createUsuarioDto.contraseña_usuario;
+    user.correo_usuario=createUsuarioDto.correo_usuario;
+    user.edad_usuario=createUsuarioDto.edad_usuario;
+    user.estatura = createUsuarioDto.estatura;
     user.IMC_usuario=createUsuarioDto.IMC_usuario;
     user.nombre_usuario=createUsuarioDto.nombre_usuario;
+    user.peso=createUsuarioDto.peso;
     user.sexo_usuario=createUsuarioDto.sexo_usuario;
-    user.edad_usuario=createUsuarioDto.edad_usuario;
     return await this.usuarioRepository.save(user);
   }
 
