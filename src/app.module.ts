@@ -17,9 +17,6 @@ import { UsuarioActImc } from './usuario-act-imc/entities/usuario-act-imc.entity
 import { UsuarioActEstresModule } from './usuario-act-estres/usuario-act-estres.module';
 import { UsuarioActEstres } from './usuario-act-estres/entities/usuario-act-estres.entity';
 
-
-
-
 @Module({
   imports: [
     TypeOrmModule.forRoot({

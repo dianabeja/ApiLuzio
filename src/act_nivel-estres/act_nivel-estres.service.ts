@@ -8,15 +8,18 @@ import { ActNivelEstres } from './entities/act_nivel-estres.entity';
 export class ActNivelEstresService {
   constructor(
     @InjectRepository(ActNivelEstres)
-    private readonly actNivelEstresRepository: Repository<ActNivelEstres>
+    private readonly actNivelEstresRepository: Repository<ActNivelEstres>,
   ) {}
 
-  async create(createActNivelEstreDto: CreateActNivelEstresDto):Promise<ActNivelEstres> {
-    const actNE =new ActNivelEstres();
-    actNE.descripcion_actNivelEstres=createActNivelEstreDto.descripcion_actNivelEstres;
-    actNE.imagen_actNivelEstres=createActNivelEstreDto.imagen_actNivelEstres;
-    actNE.nivel_estres=createActNivelEstreDto.nivel_estres;
-    actNE.nombre_actNivelEstres=createActNivelEstreDto.nombre_actNivelEstres;
+  async create(
+    createActNivelEstreDto: CreateActNivelEstresDto,
+  ): Promise<ActNivelEstres> {
+    const actNE = new ActNivelEstres();
+    actNE.descripcion_actNivelEstres =
+      createActNivelEstreDto.descripcion_actNivelEstres;
+    actNE.imagen_actNivelEstres = createActNivelEstreDto.imagen_actNivelEstres;
+    actNE.nivel_estres = createActNivelEstreDto.nivel_estres;
+    actNE.nombre_actNivelEstres = createActNivelEstreDto.nombre_actNivelEstres;
     return await this.actNivelEstresRepository.save(actNE);
   }
 
@@ -28,13 +31,15 @@ export class ActNivelEstresService {
     return this.actNivelEstresRepository.findOneById(id);
   }
 
-  async Actividades( nivel: string){
-    let Actividad1:any;
-    let Actividad2:any;
-    let Actividad3:any;
-    let Actividad4:any;
- 
-    let act= await this.actNivelEstresRepository.find({where: {nivel_estres: nivel}})
+  async Actividades(nivel: string) {
+    let Actividad1: any;
+    let Actividad2: any;
+    let Actividad3: any;
+    let Actividad4: any;
+
+    let act = await this.actNivelEstresRepository.find({
+      where: { nivel_estres: nivel },
+    });
 
     while (!Actividad1 || !Actividad2 || !Actividad3 || !Actividad4) {
       let numero: number = Math.floor(Math.random() * act.length);
@@ -43,49 +48,24 @@ export class ActNivelEstresService {
         Actividad1 = actividad;
       } else if (!Actividad2 && actividad !== Actividad1) {
         Actividad2 = actividad;
-      } else if (!Actividad3 && actividad !== Actividad1 && actividad !== Actividad2) {
+      } else if (
+        !Actividad3 &&
+        actividad !== Actividad1 &&
+        actividad !== Actividad2
+      ) {
         Actividad3 = actividad;
-      }else if (!Actividad4 && actividad !== Actividad1 && actividad !== Actividad2 && actividad!== Actividad3) {
+      } else if (
+        !Actividad4 &&
+        actividad !== Actividad1 &&
+        actividad !== Actividad2 &&
+        actividad !== Actividad3
+      ) {
         Actividad4 = actividad;
       }
     }
-    
+
     let arreglo: any = [Actividad1, Actividad2, Actividad3, Actividad4];
     return arreglo;
-    
-   /* let numero: number = ((Math.random() * act.length));
-
-    while (contador<=4){
-
-      if (contador===1) {
-        Actividad1 = act[numero.toFixed()]
-        numero = ((Math.random() * act.length));
-        contador+=1;
-      }
-
-      if (contador===2) {
-        if(act[numero.toFixed()]!=Actividad1){
-          Actividad2 = act[numero.toFixed()]
-          contador+=1;}
-        numero = ((Math.random() * act.length));
-      }
-
-      if (contador===3) {
-        if(act[numero.toFixed()]!=Actividad2){
-          Actividad3 = act[numero.toFixed()]
-          contador+=1;}
-        numero = ((Math.random() * act.length));
-      }
-      if (contador===4) {
-        if(act[numero.toFixed()]!=Actividad3){
-          Actividad4 = act[numero.toFixed()]
-          contador+=1;}
-        numero = ((Math.random() * act.length));
-      }
-        
-    }
-    let arreglo:any=[Actividad1, Actividad2, Actividad3, Actividad4]
-    return arreglo;*/
   }
 
   remove(id: number) {

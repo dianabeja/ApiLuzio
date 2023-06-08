@@ -5,33 +5,33 @@ export class Usuario {
   @PrimaryGeneratedColumn()
   id_usuario: number;
 
-  @Column({ unique: true })
+  @Column({ length: 28, unique: true })
   correo_usuario: string;
 
-  @Column({ nullable: true })
-  nombre_usuario: string;
+  @Column({ length: 30, nullable: true})
+  nombre_usuario: string ;
 
-  @Column({ nullable: true })
+  @Column({ length: 30, nullable: true })
   apellidos_usuario: string;
 
-  @Column({ nullable: true })
+  @Column({ length: 1,nullable: true })
   sexo_usuario: string;
 
   @Column({ nullable: true })
   edad_usuario: number;
 
-  @Column({ nullable: true })
+  @Column({length: 20})
   IMC_usuario: string;
 
-  @Column({ nullable: true })
+  @Column({ length: 30, nullable: true })
   nivelEstres_usuario: string;
 
-  @Column()
+  @Column({ length: 8,})
   contraseña_usuario: string;
 
   @Column()
-  estatura: string;
+  estatura: number;
 
   @Column()
-  peso: string;
+  peso: number;
 }

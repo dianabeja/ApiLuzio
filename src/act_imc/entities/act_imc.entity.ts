@@ -12,10 +12,10 @@ export class ActImc {
   @Column({ length: 500 })
   descripcion_actIMC: string;
 
-  @Column()
+  @Column({ length: 1 })
   tipo_actIMC: string;
 
-  @Column()
+  @Column({ length: 20 })
   nivel_IMC: string;
 
   @Column()

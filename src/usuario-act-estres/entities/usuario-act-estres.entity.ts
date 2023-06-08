@@ -9,7 +9,7 @@ export class UsuarioActEstres {
     id_usuarioActEstres:number;
     
     @Column()
-    estado_usuarioActEstres: string;
+    estado_usuarioActEstres: Boolean;
 
     @Column()
     usuario:number;

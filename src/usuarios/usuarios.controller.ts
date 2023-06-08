@@ -33,7 +33,7 @@ export class UsuariosController {
   }
 
   @Get(':id')
-  async findOne(@Param('id') id: number): Promise<Usuario> {
+  async findOne(@Param('id') id: number) {
     return await this.usuariosService.findOne(+id);
   }
 

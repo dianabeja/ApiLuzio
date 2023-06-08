@@ -25,6 +25,7 @@ export class ActImcService {
     return await this.actImcRepository.save(act);
   }
 
+  
   findAll() {
     return this.actImcRepository.find();
   }
@@ -64,39 +65,10 @@ export class ActImcService {
         Actividad3 = actividad;
       }
     }
-  
     let arreglo: any = [Actividad1, Actividad2, Actividad3];
+
     return arreglo;
 
-   /* let numero:number = ((Math.random() * act.length));
-
-    while (contador<=3){
-
-      if (contador===1) {
-        Actividad1 = act[numero.toFixed()]
-        numero = ((Math.random() * act.length));
-        contador+=1;
-      }
-
-      if (contador===2) {
-        if(act[numero.toFixed()]!=Actividad1){
-          Actividad2 = act[numero.toFixed()]
-          contador+=1;
-        }
-        numero = ((Math.random() * act.length));
-      }
-
-      if (contador===3) {
-        if(act[numero.toFixed()]!=Actividad2 && act[numero.toFixed()]!=Actividad1){
-        Actividad3 = act[numero.toFixed()]
-        contador+=1;
-      }
-      numero = ((Math.random() * act.length));
-    }
-    let arreglo:any=[Actividad1, Actividad2, Actividad3]; 
-   
-    return arreglo;
-  }*/
 }
 
 async Actividad(actividades: string){

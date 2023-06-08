@@ -11,10 +11,10 @@ export class CreateActNivelEstresDto {
     descripcion_actNivelEstres:string;
 
     @IsString()
-    @Length(0,20,{message:ValidationMessages.IMPUT_NOMBRE})
+    @Length(0,30,{message:ValidationMessages.IMPUT_NOMBRE})
     nivel_estres:string;
 
     @IsString()
-    @Length(0,200,{message:ValidationMessages.IMPUT_NOMBRE})
+    @Length(0,255,{message:ValidationMessages.IMPUT_NOMBRE})
     imagen_actNivelEstres:string;
 }

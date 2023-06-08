@@ -1,10 +1,9 @@
-import { IsString, IsNumber, Length } from "class-validator";
+import { IsString, IsNumber, Length, IsBoolean } from "class-validator";
 import { ValidationMessages } from "src/helpers/validation.messages";
 
 export class CreateUsuarioActImcDto {
-    @IsString()
-    @Length(1,20,{message:ValidationMessages.IMPUT_NOMBRE} )
-    estado: string;
+    @IsBoolean()
+    estado: boolean;
 
     @IsNumber()
     usuario:number;

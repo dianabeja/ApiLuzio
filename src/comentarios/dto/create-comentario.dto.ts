@@ -3,7 +3,7 @@ import { ValidationMessages } from "src/helpers/validation.messages";
 
 export class CreateComentarioDto {
     @IsString()
-    @Length(1,200,{message:ValidationMessages.IMPUT_NOMBRE})
+    @Length(1,250,{message:ValidationMessages.IMPUT_NOMBRE})
     texto_comentario:string;
 
     @IsString()

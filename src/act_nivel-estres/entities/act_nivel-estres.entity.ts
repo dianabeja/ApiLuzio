@@ -6,13 +6,13 @@ export class ActNivelEstres {
     @PrimaryGeneratedColumn()
     id_actNivelEstres:number;
 
-    @Column({ length: 500 })
+    @Column({ length: 50 })
     nombre_actNivelEstres:string;
 
-    @Column()
+    @Column({ length: 500 })
     descripcion_actNivelEstres:string;
 
-    @Column()
+    @Column({ length: 30 })
     nivel_estres:string;
 
     @Column()

@@ -9,7 +9,7 @@ export class Comentario {
     @Column()
     texto_comentario:string;
 
-    @Column()
+    @Column({length: 30})
     tipoModulo:string;
 
     @Column()
