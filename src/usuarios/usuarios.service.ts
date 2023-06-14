@@ -59,6 +59,7 @@ export class UsuariosService {
     return this.usuarioRepository.update(buscar.id_usuario, valor);
   }
 
+
   async updateEstres(correo: string, valor: UpDateEstresDto) {
     let buscar = await this.usuarioRepository.findOne({
       where: { correo_usuario: correo },

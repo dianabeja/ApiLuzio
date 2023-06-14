@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Module,forwardRef  } from '@nestjs/common';
 import { UsuarioActEstresService } from './usuario-act-estres.service';
 import { UsuarioActEstresController } from './usuario-act-estres.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -13,6 +13,6 @@ import { UsuarioActEstresFactory } from 'src/Fabrica/Entidades/usuario_Act_Estre
   controllers: [UsuarioActEstresController],
   providers: [UsuarioActEstresService, UsuarioActEstresFactory],
   exports: [UsuarioActEstresService],
-  imports: [TypeOrmModule.forFeature([UsuarioActEstres,Usuario,ActNivelEstres, UsuarioActEstresFactory]),UsuariosModule, ActNivelEstresModule]
+  imports: [forwardRef(() =>  ActNivelEstresModule),TypeOrmModule.forFeature([UsuarioActEstres,Usuario,ActNivelEstres, UsuarioActEstresFactory]),UsuariosModule]
 })
 export class UsuarioActEstresModule {}

@@ -7,7 +7,7 @@ import { UsuarioActImcFactory } from 'src/Fabrica/Entidades/usuario_Act_IMC.fact
 @Controller('usuario-act-imc')
 export class UsuarioActImcController {
   constructor(
-    private readonly usuarioActImcService: UsuarioActImcService,
+    private usuarioActImcService: UsuarioActImcService,
     private usuarioActImcFactory: UsuarioActImcFactory) {}
 
   @Post()
@@ -26,17 +26,27 @@ export class UsuarioActImcController {
   }
 
   @Get('/id_usuario/:usuario')
-  findByUsuario(@Param('usuario') usuario:number){
-    return this.usuarioActImcService.findByUsuario(+usuario);
+  findByUsuario(@Param('usuario') usuario:string){
+    return this.usuarioActImcService.findByUsuario(usuario);
   }
 
-  @Patch('/id/:id')
-  async update(@Param('id') id:number, @Body() update:UpdateUActIMC){
-   return this.usuarioActImcService.update(+id, update);
+  @Get('/activi/:usuario')
+  findActividades(@Param('usuario') usuario:string){
+    return this.usuarioActImcService.findActividades(usuario);
+  }
+
+  @Patch('/update/:id')
+  async update(@Param('id') id:string, @Body() update:boolean){
+   return this.usuarioActImcService.update(id, update);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.usuarioActImcService.remove(+id);
+  }
+
+  @Post('/asignarAct/:datos')
+  crearTodasAct(@Param('datos') datos: string){
+    return this.usuarioActImcService.crearTodasAct(datos)
   }
 }

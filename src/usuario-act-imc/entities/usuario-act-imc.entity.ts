@@ -12,8 +12,7 @@ export class UsuarioActImc {
     estado: boolean;
 
     @Column()
-    usuario:number;
-
+    correo_usuario: string;
     @Column()
     actIMC:number;
 

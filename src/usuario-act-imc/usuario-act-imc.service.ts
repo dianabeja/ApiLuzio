@@ -4,38 +4,37 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { UsuarioActImc } from './entities/usuario-act-imc.entity';
 import { Usuario } from 'src/usuarios/entities/usuario.entity';
-import { ActImc } from 'src/act_imc/entities/act_imc.entity';
-import { UpdateUActIMC } from './dto/updateuActIMC.dto';
 import { ActImcService } from 'src/act_imc/act_imc.service';
+import { AstPath } from 'prettier';
 
 @Injectable()
 export class UsuarioActImcService {
   constructor(
     @InjectRepository(UsuarioActImc)
-    private readonly uActImcRepository:Repository<UsuarioActImc>,
+    private readonly uActImcRepository: Repository<UsuarioActImc>,
     @InjectRepository(Usuario)
     private readonly usuarioRepository: Repository<Usuario>,
-    @Inject(forwardRef(() => ActImcService)) 
-    private readonly actImcRepository:ActImcService
-  ){}
+    @Inject(forwardRef(() => ActImcService))
+    private readonly actImcRepository: ActImcService,
+  ) {}
 
   async create(createUsuarioActImcDto: CreateUsuarioActImcDto) {
-    const usuario=await this.usuarioRepository.findOneById(
-      createUsuarioActImcDto.usuario,
+    const usuario = await this.usuarioRepository.findOneById(
+      createUsuarioActImcDto.correo_usuario,
     );
-    const actIMC=await this.actImcRepository.findOne(
+    const actIMC = await this.actImcRepository.findOne(
       createUsuarioActImcDto.actIMC,
     );
-    if(!usuario){
+    if (!usuario) {
       return 'El usuario no existe :c';
     }
-    if(!actIMC){
-      return 'La actividad no existe :c'
+    if (!actIMC) {
+      return 'La actividad no existe :c';
     }
-    const uActImc= new UsuarioActImc;
-    uActImc.estado=createUsuarioActImcDto.estado;
-    uActImc.usuario=createUsuarioActImcDto.usuario;
-    uActImc.actIMC=createUsuarioActImcDto.actIMC;
+    const uActImc = new UsuarioActImc();
+    uActImc.estado = createUsuarioActImcDto.estado;
+    uActImc.correo_usuario = createUsuarioActImcDto.correo_usuario;
+    uActImc.actIMC = createUsuarioActImcDto.actIMC;
     return await this.uActImcRepository.save(uActImc);
   }
 
@@ -47,19 +46,75 @@ export class UsuarioActImcService {
     return this.uActImcRepository.findOneById(id);
   }
 
-  findByUsuario(usuario:number){
+  findByUsuario(usuario: string) {
     return this.uActImcRepository.find({
-      where:{
-        usuario:usuario,
-      }
-    })
+      where: {
+        correo_usuario: usuario,
+      },
+    });
   }
 
-  update(id:number, valor:UpdateUActIMC){
-    return this.uActImcRepository.update(id, valor);
+  async findActividades(usuario: string) {
+    let ArregloActividades: Array<any> = [];
+    ArregloActividades = await this.uActImcRepository.find({
+      where: { correo_usuario: usuario, estado: false },
+    });
+
+    let CampoObjetoActividad = ArregloActividades.map(
+      (ObjetosActividades) => ObjetosActividades.actIMC,
+    );
+
+    return CampoObjetoActividad;
+  }
+
+  async update(datos: string, valor: any) {
+    let datosobtener = datos.split(',');
+    let usuario = datosobtener[0];
+    let actividad = datosobtener[1];
+
+    try {
+      const registro = await this.uActImcRepository.findOne({
+        where: { correo_usuario: usuario, actIMC: +actividad},
+      });
+      
+      if (!registro) {
+        return 'No se encontró el registro';
+      }
+
+      let id=registro.id_usuarioActIMC;
+      await this.uActImcRepository.update(id, valor);
+
+      return 'Registro actualizado correctamente';
+    } catch (error) {
+      return 'Error al actualizar el registro';
+    }
+      return "Actualizado!"
   }
 
   remove(id: number) {
     return 'This action removes a #${id} usuarioActImc';
   }
+
+  async crearTodasAct(datos){
+    let dato=datos.split(',');
+    const  usuario=dato[0];
+    const tipo=dato[1];
+    const nivel=dato[2];
+    const usuarios = await this.usuarioRepository.findOne({where:{
+      correo_usuario:usuario}});
+      if (!usuarios) {
+        return 'El usuario no existe :c';
+      }
+      let arrayAct = await this.actImcRepository.findTipoNivel(tipo, nivel);
+
+      for(let i=0; i< arrayAct.length;i++){
+      const uActImc = new UsuarioActImc();
+      uActImc.estado = false;
+      uActImc.correo_usuario = usuario;
+      uActImc.actIMC = arrayAct[i].id_actIMC;
+      await this.uActImcRepository.save(uActImc);
+    }
+    return 'Actividades registradas'
+    }
+  
 }

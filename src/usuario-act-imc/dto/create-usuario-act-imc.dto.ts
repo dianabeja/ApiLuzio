@@ -5,8 +5,8 @@ export class CreateUsuarioActImcDto {
     @IsBoolean()
     estado: boolean;
 
-    @IsNumber()
-    usuario:number;
+    @IsString()
+    correo_usuario: string;
 
     @IsNumber()
     actIMC:number;

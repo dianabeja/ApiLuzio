@@ -49,11 +49,24 @@ export class UsuarioActEstresService {
   findByUsuario(usuario:number){
     return this.uActEstresRepository.find({
       where:{
-        usuario:usuario,
+        id_usuarioActEstres :usuario,
       }
     })
   }
   
+  async findActividades(usuario: string) {
+    let ArregloActividades: Array<any> = [];
+    ArregloActividades = await this.uActEstresRepository.find({
+      where: { usuario: usuario, estado_usuarioActEstres: false  },
+    });
+
+    let CampoObjetoActividad = ArregloActividades.map(
+      (ObjetosActividades) => ObjetosActividades.actEstres,
+    );
+
+    return CampoObjetoActividad;
+  }
+
   findByAct(id_act:number){
     return this.uActEstresRepository.find({
       where:{
@@ -62,11 +75,52 @@ export class UsuarioActEstresService {
     })
   }
 
-  update(id:number, valor:UpdateUActEstres){
-    return this.uActEstresRepository.update(id, valor);
+  async update(datos: string, valor: any) {
+    let datosobtener = datos.split(',');
+    let usuario = datosobtener[0];
+    let actividad = datosobtener[1];
+
+    try {
+      const registro = await this.uActEstresRepository.findOne({
+        where: { usuario: usuario, actEstres: +actividad},
+      });
+
+      if (!registro) {
+        return 'No se encontró el registro';
+      }
+      let id=registro.id_usuarioActEstres;
+    
+      await this.uActEstresRepository.update(id,valor);
+
+      return 'Registro actualizado correctamente';
+    } catch (error) {
+      return 'Error al actualizar el registro';
+    }
+      return "Actualizado!"
   }
 
   remove(id: number) {
     return `This action removes a #${id} usuarioActEstre`;
   }
+
+  async crearTodasAct(datos){
+    let dato=datos.split(',');
+    const  usuario=dato[0];
+    const nivel=dato[1];
+    const usuarios = await this.usuarioRepository.findOne({where:{
+      correo_usuario:usuario}});
+      if (!usuarios) {
+        return 'El usuario no existe :c';
+      }
+      let arrayAct = await this.actEstresRepository.find({where: {nivel_estres:nivel}});
+
+      for(let i=0; i< arrayAct.length;i++){
+      const uActEstres = new UpdateUActEstres();
+      uActEstres.estado_usuarioActEstres = false;
+      uActEstres.usuario = usuario;
+      uActEstres.actEstres = arrayAct[i].id_actNivelEstres;
+      await this.uActEstresRepository.save(uActEstres);
+    }
+    return 'Actividades registradas'
+    }
 }

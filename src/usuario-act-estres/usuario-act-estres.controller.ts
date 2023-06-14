@@ -36,13 +36,18 @@ export class UsuarioActEstresController {
     return this.usuarioActEstresService.findByAct(+id_act);
   }
 
-  @Patch('/id/:id')
-   async update(@Param('id') id:number, @Body() update:UpdateUActEstres){
-    return this.usuarioActEstresService.update(+id, update);
+  @Patch('/update/:id')
+   async update(@Param('id') id:string, @Body() update:UpdateUActEstres){
+    return this.usuarioActEstresService.update(id, update);
    }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.usuarioActEstresService.remove(+id);
+  }
+
+  @Post('/asignarAct/:datos')
+  crearTodasAct(@Param('datos') datos: string){
+    return this.usuarioActEstresService.crearTodasAct(datos)
   }
 }

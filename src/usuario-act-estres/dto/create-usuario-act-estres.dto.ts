@@ -5,8 +5,8 @@ export class CreateUsuarioActEstreDto {
     @IsBoolean()
     estado_usuarioActEstres: boolean;
 
-    @IsNumber()
-    usuario:number;
+    @IsString()
+    usuario:string;
 
     @IsNumber()
     actEstres:number;

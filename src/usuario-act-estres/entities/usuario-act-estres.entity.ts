@@ -12,7 +12,7 @@ export class UsuarioActEstres {
     estado_usuarioActEstres: Boolean;
 
     @Column()
-    usuario:number;
+    usuario:string;
 
     @Column()
     actEstres:number;
