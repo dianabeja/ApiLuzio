@@ -30,7 +30,7 @@ export class ComentariosController {
 
   @Get('/id_cuenta/:id')
   findByIdCuenta(@Param('id') id: string) {
-    return this.comentariosService.findByIdCuenta(+id);
+    return this.comentariosService.findByIdCuenta(id);
   }
 
   @Delete(':id')

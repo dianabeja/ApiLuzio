@@ -2,15 +2,15 @@ import { Module } from '@nestjs/common';
 import { ComentariosService } from './comentarios.service';
 import { ComentariosController } from './comentarios.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Cuenta } from 'src/cuenta/entities/cuenta.entity';
-import { CuentaModule } from 'src/cuenta/cuenta.module';
 import { Comentario } from './entities/comentario.entity';
 import { ComentariosFactory } from 'src/Fabrica/Entidades/cometarios.factory';
+import { Usuario } from 'src/usuarios/entities/usuario.entity';
+import { UsuariosModule } from 'src/usuarios/usuarios.module';
 
 @Module({
   controllers: [ComentariosController],
   providers: [ComentariosService, ComentariosFactory],
-  imports: [TypeOrmModule.forFeature([Cuenta, Comentario, ComentariosFactory]), CuentaModule],
+  imports: [TypeOrmModule.forFeature([ Comentario, ComentariosFactory, Usuario]), UsuariosModule],
   exports: [ComentariosService]
 })
 

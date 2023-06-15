@@ -13,5 +13,5 @@ export class Comentario {
     tipoModulo:string;
 
     @Column()
-    cuenta:number;
+    cuenta:string;
 }

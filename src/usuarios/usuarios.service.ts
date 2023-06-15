@@ -93,7 +93,6 @@ export class UsuariosService {
         imc: buscar.IMC_usuario,
         nivel_estres: buscar.nivelEstres_usuario
       };
-  
       return response;
     }
   }

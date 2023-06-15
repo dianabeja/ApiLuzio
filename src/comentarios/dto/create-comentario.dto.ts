@@ -10,6 +10,6 @@ export class CreateComentarioDto {
     @Length(1,30,{message:ValidationMessages.IMPUT_NOMBRE})
     tipoModulo:string;
     
-    @IsNumber()
-    cuenta:number;
+    @IsString()
+    cuenta:string;
 }

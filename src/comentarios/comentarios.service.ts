@@ -3,23 +3,21 @@ import { CreateComentarioDto } from './dto/create-comentario.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Comentario } from './entities/comentario.entity';
 import { Repository } from 'typeorm';
-import { Cuenta } from 'src/cuenta/entities/cuenta.entity';
+import { Usuario } from 'src/usuarios/entities/usuario.entity';
 
 @Injectable()
 export class ComentariosService {
   constructor(
     @InjectRepository(Comentario)
     private readonly comentarioReposotory: Repository<Comentario>,
-    @InjectRepository(Cuenta)
-    private readonly cuentaRepository: Repository<Cuenta>
+    @InjectRepository(Usuario)
+    private readonly usuarioRepository: Repository<Usuario>
   ){}
 
   async create(createComentarioDto: CreateComentarioDto) {
-    const cuenta=await this.cuentaRepository.findOneById(
-      createComentarioDto.cuenta,
-    );
+    const usuario=await this.usuarioRepository.findOne({where: {correo_usuario: createComentarioDto.cuenta}})
     
-    if(!cuenta){
+    if(!usuario){
       return 'La cuenta no existe';
     }
       const comentario=new Comentario();
@@ -47,10 +45,10 @@ export class ComentariosService {
     return this.comentarioReposotory.findOneById(id);
   }
 
-  findByIdCuenta(cuenta:number) {
+  findByIdCuenta(usuario:string) {
     return this.comentarioReposotory.find({
       where: {
-        cuenta: cuenta,
+        cuenta: usuario,
       }
     })
   }
