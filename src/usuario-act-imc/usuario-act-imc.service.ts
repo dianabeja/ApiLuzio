@@ -99,13 +99,12 @@ export class UsuarioActImcService {
     let dato=datos.split(',');
     const  usuario=dato[0];
     const tipo=dato[1];
-    const nivel=dato[2];
     const usuarios = await this.usuarioRepository.findOne({where:{
       correo_usuario:usuario}});
       if (!usuarios) {
         return 'El usuario no existe :c';
       }
-      let arrayAct = await this.actImcRepository.findTipoNivel(tipo, nivel);
+      let arrayAct = await this.actImcRepository.findTipoNivel(tipo, usuarios.IMC_usuario);
 
       for(let i=0; i< arrayAct.length;i++){
       const uActImc = new UsuarioActImc();

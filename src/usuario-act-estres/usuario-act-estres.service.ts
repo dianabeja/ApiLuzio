@@ -106,13 +106,12 @@ export class UsuarioActEstresService {
   async crearTodasAct(datos){
     let dato=datos.split(',');
     const  usuario=dato[0];
-    const nivel=dato[1];
     const usuarios = await this.usuarioRepository.findOne({where:{
       correo_usuario:usuario}});
       if (!usuarios) {
         return 'El usuario no existe :c';
       }
-      let arrayAct = await this.actEstresRepository.find({where: {nivel_estres:nivel}});
+      let arrayAct = await this.actEstresRepository.find({where: {nivel_estres:usuarios.nivelEstres_usuario}});
 
       for(let i=0; i< arrayAct.length;i++){
       const uActEstres = new UpdateUActEstres();

@@ -4,6 +4,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { ActImc } from './entities/act_imc.entity';
 import { UsuarioActImcService } from 'src/usuario-act-imc/usuario-act-imc.service';
+import { Usuario } from 'src/usuarios/entities/usuario.entity';
 
 @Injectable()
 export class ActImcService {
@@ -12,6 +13,8 @@ export class ActImcService {
     private readonly actImcRepository: Repository<ActImc>,
     @Inject(forwardRef(() => UsuarioActImcService))
     private usuarioAtIMCRepository: UsuarioActImcService,
+    @InjectRepository(Usuario)
+    private readonly usuarioRepository: Repository<Usuario>,
   ) {}
 
   async create(createActImcDto: CreateActImcDto) {
@@ -48,17 +51,18 @@ export class ActImcService {
   }
 
   async Actividades(actividades: string) {
+    
     const array = actividades.split(',');
-
     const tipo = array[0];
-    const nivel = array[1];
-    const usuario = array[2];
+    const usuario = array[1];
     let Actividad1: any;
     let Actividad2: any;
     let Actividad3: any;
 
+    const buscar = await this.usuarioRepository.findOne({where:{correo_usuario: usuario}})
+
     let todasAct = await this.actImcRepository.find({
-      where: { tipo_actIMC: tipo, nivel_IMC: nivel },
+      where: { tipo_actIMC: tipo, nivel_IMC: buscar.IMC_usuario },
     });
     let idTodasAct = todasAct.map((id) => id.id_actIMC);
 
@@ -104,7 +108,7 @@ export class ActImcService {
     for (let i = 0; i < actUsuario.length; i++) {
       let numero: number = actUsuario[i];
       let acti: any = await this.actImcRepository.find({
-        where: { tipo_actIMC:tipo ,nivel_IMC: nivel, id_actIMC: numero }
+        where: { tipo_actIMC:tipo ,nivel_IMC: buscar.IMC_usuario, id_actIMC: numero }
       });
       arreglo.push(acti);
     }

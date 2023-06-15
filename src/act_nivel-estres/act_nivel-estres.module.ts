@@ -6,8 +6,10 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ActEstresFactory } from 'src/Fabrica/Entidades/act_NivelEstres.factory';
 import { UsuarioActEstres } from 'src/usuario-act-estres/entities/usuario-act-estres.entity';
 import { UsuarioActEstresModule } from 'src/usuario-act-estres/usuario-act-estres.module';
+import { Usuario } from 'src/usuarios/entities/usuario.entity';
+import { UsuariosModule } from 'src/usuarios/usuarios.module';
 @Module({
-  imports: [UsuarioActEstresModule, TypeOrmModule.forFeature([ActNivelEstres, ActEstresFactory, UsuarioActEstres])],
+  imports: [UsuarioActEstresModule, TypeOrmModule.forFeature([ActNivelEstres, ActEstresFactory, UsuarioActEstres,Usuario]),UsuariosModule],
   controllers: [ActNivelEstresController],
   providers: [ActNivelEstresService, ActEstresFactory],
   exports : [ActNivelEstresService]

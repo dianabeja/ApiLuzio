@@ -4,6 +4,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { ActNivelEstres } from './entities/act_nivel-estres.entity';
 import { UsuarioActEstresService } from 'src/usuario-act-estres/usuario-act-estres.service';
+import { Usuario } from 'src/usuarios/entities/usuario.entity';
 
 @Injectable()
 export class ActNivelEstresService {
@@ -12,6 +13,8 @@ export class ActNivelEstresService {
     private readonly actNivelEstresRepository: Repository<ActNivelEstres>,
     @Inject(forwardRef(() => UsuarioActEstresService))
     private usuarioAtEstresRepository: UsuarioActEstresService,
+    @InjectRepository(Usuario)
+    private readonly usuarioRepository: Repository<Usuario>,
   ) {}
 
   async create(
@@ -34,17 +37,17 @@ export class ActNivelEstresService {
     return this.actNivelEstresRepository.findOneById(id);
   }
 
-  async Actividades(actividades: string) {
-    const array = actividades.split(',');
-    const nivel = array[0];
-    const usuario = array[1];
+  async Actividades(usuario: string) {
+   
     let Actividad1: any;
     let Actividad2: any;
     let Actividad3: any;
     let Actividad4: any;
 
+    const buscar = await this.usuarioRepository.findOne({where:{correo_usuario: usuario}})
+
     let todasAct = await this.actNivelEstresRepository.find({
-      where: { nivel_estres: nivel },
+      where: { nivel_estres: buscar.nivelEstres_usuario },
     });
 
     let idTodasAct = todasAct.map((id) => id.id_actNivelEstres);
@@ -102,7 +105,7 @@ export class ActNivelEstresService {
       for (let i = 0; i < actUsuario.length; i++) {
         let numero: number = actUsuario[i];
         let acti: any = await this.actNivelEstresRepository.find({
-          where: { nivel_estres: nivel, id_actNivelEstres: numero }
+          where: { nivel_estres: buscar.nivelEstres_usuario, id_actNivelEstres: numero }
         });
         arreglo.push(acti);
       }
