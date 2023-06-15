@@ -90,6 +90,8 @@ export class UsuariosService {
     } else {
       const response = {
         correo_usuario: buscar.correo_usuario,
+        imc: buscar.IMC_usuario,
+        nivel_estres: buscar.nivelEstres_usuario
       };
   
       return response;
