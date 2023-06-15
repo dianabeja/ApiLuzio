@@ -104,7 +104,7 @@ export class ActNivelEstresService {
 
       for (let i = 0; i < actUsuario.length; i++) {
         let numero: number = actUsuario[i];
-        let acti: any = await this.actNivelEstresRepository.find({
+        let acti: any = await this.actNivelEstresRepository.findOne({
           where: { nivel_estres: buscar.nivelEstres_usuario, id_actNivelEstres: numero }
         });
         arreglo.push(acti);

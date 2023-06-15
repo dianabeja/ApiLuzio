@@ -73,7 +73,7 @@ export class ActImcService {
 
     let actividadesSeleccionadas = new Set<number>();
 
-    if (actUsuario.length >= 4) {
+    if (actUsuario.length >= 3) {
     while (!Actividad1 || !Actividad2 || !Actividad3) {
       let numero: number = Math.floor(Math.random() * actUsuario.length);
 
@@ -103,11 +103,11 @@ export class ActImcService {
     let arreglo: any = [Actividad1, Actividad2, Actividad3];
     return arreglo;
   } else {
-    let arreglo: any[] = [];
+    let arreglo: any = [];
 
     for (let i = 0; i < actUsuario.length; i++) {
       let numero: number = actUsuario[i];
-      let acti: any = await this.actImcRepository.find({
+      let acti: any = await this.actImcRepository.findOne({
         where: { tipo_actIMC:tipo ,nivel_IMC: buscar.IMC_usuario, id_actIMC: numero }
       });
       arreglo.push(acti);
